@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity} from 'react-native';
+import { Text, View, Image, ScrollView, Alert} from 'react-native';
 import Slider from '@react-native-community/slider'
 import { Button } from '@rneui/themed';
 
@@ -23,8 +23,6 @@ const App = () => {
         ...prevState,
         painTypes: prevState.painTypes.filter((item) => item !== title),
       }));} 
-      console.log(title);
-      console.log(userDetails.painTypes);
     }
     if(category == "Location"){
       if(!userDetails.painLocations.includes(title)){
@@ -37,8 +35,6 @@ const App = () => {
         ...prevState,
         painLocations: prevState.painLocations.filter((item) => item !== title),
       }));}
-      console.log(title);
-      console.log(userDetails.painLocations);
     }
     if(category == "Triggers"){
       if(!userDetails.triggers.includes(title)){
@@ -51,8 +47,6 @@ const App = () => {
         ...prevState,
         triggers: prevState.triggers.filter((item) => item !== title),
       }));}
-      console.log(title);
-      console.log(userDetails.triggers);
     }
     if(category == "asFactors"){
       if(!userDetails.asFactors.includes(title)){
@@ -65,8 +59,6 @@ const App = () => {
         ...prevState,
         asFactors: prevState.asFactors.filter((item) => item !== title),
       }));}
-      console.log(title);
-      console.log(userDetails.asFactors);
     }
   }
   const changeColor1 = (title) => {
@@ -87,8 +79,60 @@ const App = () => {
   }
 
   const handleOnPress = () => {
-    alert("User details: \nPain Value: "+ userDetails.painValue+"\nPain Types: "+userDetails.painTypes+"\nPain Locations: "+userDetails.painLocations+"\nTriggers: "+userDetails.triggers+"\nAssociated Factors: "+userDetails.asFactors)
+    Alert.alert("Information logged succesfully","User details: \nPain Value: "+ userDetails.painValue+"\nPain Types: "+userDetails.painTypes+"\nPain Locations: "+userDetails.painLocations+"\nTriggers: "+userDetails.triggers+"\nAssociated Factors: "+userDetails.asFactors)
+    setUserDetails((prevState) => ({painValue: 0,
+      painTypes: [],
+      painLocations: [],
+      triggers: [],
+      asFactors: []}))
   }
+
+
+  const serverUpload = () => {
+    const postData = {
+      painValue: userDetails.painValue,
+      painTypes: userDetails.painTypes,
+      painLocations: userDetails.painLocations,
+      triggers: userDetails.triggers,
+      asFactors: userDetails.asFactors,
+    };
+
+    fetch('https://dummy-url.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Handle success response if needed
+          return response.json();
+        } else {
+          // Handle error response if needed
+          throw new Error('Network response was not ok.');
+        }
+      })
+      .then((data) => {
+        Alert.alert('Information logged successfully', `User details: \n${JSON.stringify(data)}`);
+      })
+      .catch((error) => {
+        // Handle error
+        console.error('Error:', error);
+        Alert.alert('Error occurred', 'An error occurred while logging the information.');
+      })
+      .finally(() => {
+        // Clear user details after posting the data
+        setUserDetails({
+          painValue: 0,
+          painTypes: [],
+          painLocations: [],
+          triggers: [],
+          asFactors: [],
+        });
+      });
+  };
+
   return (
     <ScrollView>
     <View className="mt-10">
