@@ -87,8 +87,7 @@ const App = () => {
   }
 
   const handleOnPress = () => {
-    console.log("User details: \nPain Value: "+ userDetails.painValue+"\nPain Types: "+userDetails.painTypes+"\nPain Locations: "+userDetails.painLocations+"\nTriggers: "+userDetails.triggers+"\nAssociated Factors: "+userDetails.asFactors)
-    alert("Subission Successful!")
+    alert("User details: \nPain Value: "+ userDetails.painValue+"\nPain Types: "+userDetails.painTypes+"\nPain Locations: "+userDetails.painLocations+"\nTriggers: "+userDetails.triggers+"\nAssociated Factors: "+userDetails.asFactors)
   }
   return (
     <ScrollView>
@@ -158,10 +157,7 @@ const App = () => {
         </View>
         <View className="bg-lightGray h-8"></View>
       </View>
-
-      <TouchableOpacity className="bg-blue m-10, p-4 rounded-lg" onPress={handleOnPress}>
-        <Text className="color-white text-center text-xl font-bold">Submit</Text>
-      </TouchableOpacity>
+      <Button title="Next" buttonStyle={{backgroundColor: 'black', borderColor: 'white', borderWidth:2, borderRadius: 30}} containerStyle={{width:200, marginHorizontal: 100, marginVertical: 10}}onPress={handleOnPress}/>
     </View>
     </ScrollView>
   );
