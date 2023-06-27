@@ -4,6 +4,7 @@ import Slider from '@react-native-community/slider'
 import { Button } from '@rneui/themed';
 
 const App = () => {
+  //User details starting state
   const [userDetails, setUserDetails] = useState({
     painValue: 0,
     painTypes: [],
@@ -11,6 +12,7 @@ const App = () => {
     triggers: [],
     asFactors: []
   })
+  //On button press, add or remove the title from the array (independent if clause for each category)
   const buttonLog = (title, category) => {
     if(category == "Type"){
       if(!userDetails.painTypes.includes(title)){
@@ -61,6 +63,7 @@ const App = () => {
       }));}
     }
   }
+  //Change the color of the button if it is selected
   const changeColor1 = (title) => {
     if(userDetails.painTypes.includes(title) || userDetails.painLocations.includes(title)){
       return '#b9a7f2';
@@ -69,6 +72,7 @@ const App = () => {
       return '#fff';
     }
   }
+  //Change the color of the button if it is selected (for triggers and associated factors)
   const changeColor2 = (title,category) => {
     if((userDetails.triggers.includes(title) && (category == "Triggers")) || (userDetails.asFactors.includes(title) && (category == "asFactors"))){
       return '#b9a7f2';
@@ -78,6 +82,7 @@ const App = () => {
     }
   }
 
+  //If the 'next' button is clicked, show the details and clear the user details for the next entry
   const handleOnPress = () => {
     Alert.alert("Information logged succesfully","User details: \nPain Value: "+ userDetails.painValue+"\nPain Types: "+userDetails.painTypes+"\nPain Locations: "+userDetails.painLocations+"\nTriggers: "+userDetails.triggers+"\nAssociated Factors: "+userDetails.asFactors)
     setUserDetails((prevState) => ({painValue: 0,
@@ -87,7 +92,7 @@ const App = () => {
       asFactors: []}))
   }
 
-
+  //Function to upload the data to the server (not implemented, just to show my knowledge of fetch)
   const serverUpload = () => {
     const postData = {
       painValue: userDetails.painValue,
@@ -133,7 +138,7 @@ const App = () => {
       });
   };
 
-  return (
+  return ( 
     <ScrollView>
     <View className="mt-10">
       <Text className="font-bold m-10 text-3xl">Pain</Text>
@@ -161,12 +166,12 @@ const App = () => {
           <Button title="Cramping" color={changeColor1('Cramping')} titleStyle={{color: 'black'}} buttonStyle={{borderRadius: 10}} onPress={() => buttonLog("Cramping", "Type")} />
           <Button title="Pulling" color={changeColor1('Pulling')} titleStyle={{color: 'black'}} buttonStyle={{borderRadius: 10}} onPress={() => buttonLog("Pulling", "Type")} />
         </View>
-        <View className="flex-row mt-5 justify-evenly">
+        <View className="flex-row mt-3 ml-[-10] justify-evenly">
           <Button title="Stabbing" color={changeColor1('Stabbing')} titleStyle={{color: 'black'}} buttonStyle={{borderRadius: 10}} onPress={() => buttonLog("Stabbing", "Type")} />
           <Button title="Aching" color={changeColor1('Aching')} titleStyle={{color: 'black'}} buttonStyle={{borderRadius: 10}} onPress={() => buttonLog("Aching", "Type")} />
           <Button title="Pulsating" color={changeColor1('Pulsating')} titleStyle={{color: 'black'}} buttonStyle={{borderRadius: 10}} onPress={() => buttonLog("Pulsating", "Type")} />
         </View>
-        <View className="bg-lightGray h-8"></View>
+        <View className="bg-lightGray h-4"></View>
       </View>
 
       <View className="bg-lightGray mt-5 ml-5 mr-5 p-4 rounded-lg">
@@ -176,12 +181,12 @@ const App = () => {
           <Button title="Ovaries" color={changeColor1('Ovaries')} titleStyle={{color: 'black'}} buttonStyle={{borderRadius: 10}} onPress={() => buttonLog("Ovaries", "Location")} />
           <Button title="Lower back" color={changeColor1('Lower back')} titleStyle={{color: 'black'}} buttonStyle={{borderRadius: 10}} onPress={() => buttonLog("Lower back", "Location")} />
         </View>
-        <View className="flex-row mt-5 justify-evenly">
+        <View className="flex-row mt-3 ml-[-15] justify-evenly">
           <Button title=" Womb " color={changeColor1(' Womb ')} titleStyle={{color: 'black'}} buttonStyle={{borderRadius: 10}} onPress={() => buttonLog(" Womb ", "Location")} />
           <Button title="  Leg  " color={changeColor1('  Leg  ')} titleStyle={{color: 'black'}} buttonStyle={{borderRadius: 10}} onPress={() => buttonLog("  Leg  ", "Location")} />
           <Button title="  Hip  " color={changeColor1('  Hip  ')} titleStyle={{color: 'black'}} buttonStyle={{borderRadius: 10}} onPress={() => buttonLog("  Hip  ", "Location")} />
         </View>
-        <View className="bg-lightGray h-8"></View>
+        <View className="bg-lightGray h-4"></View>
       </View>
 
       <View className="bg-lightGray mt-5 ml-5 mr-5 p-4 rounded-lg">
@@ -190,7 +195,7 @@ const App = () => {
           <Button title="Your data" color={changeColor2('Your data','Triggers')} titleStyle={{color: 'black'}} buttonStyle={{borderRadius: 10}} onPress={() => buttonLog("Your data", "Triggers")} />
           <Button title="Your goals" color={changeColor2('Your goals','Triggers')} titleStyle={{color: 'black'}} buttonStyle={{borderRadius: 10}} onPress={() => buttonLog("Your goals", "Triggers")} />
         </View>
-        <View className="bg-lightGray h-8"></View>
+        <View className="bg-lightGray h-4"></View>
       </View>
 
       <View className="bg-lightGray mt-5 ml-5 mr-5 p-4 rounded-lg">
@@ -199,7 +204,7 @@ const App = () => {
           <Button title="Your data" color={changeColor2('Your data', 'asFactors')} titleStyle={{color: 'black'}} buttonStyle={{borderRadius: 10}} onPress={() => buttonLog("Your data", "asFactors")} />
           <Button title="Your goals" color={changeColor2('Your goals', 'asFactors')} titleStyle={{color: 'black'}} buttonStyle={{borderRadius: 10}}onPress={() => buttonLog("Your goals", "asFactors")} />
         </View>
-        <View className="bg-lightGray h-8"></View>
+        <View className="bg-lightGray h-4"></View>
       </View>
       <Button title="Next" buttonStyle={{backgroundColor: 'black', borderColor: 'white', borderWidth:2, borderRadius: 30}} containerStyle={{width:200, marginHorizontal: 100, marginVertical: 10}}onPress={handleOnPress}/>
     </View>
